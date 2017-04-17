@@ -111,6 +111,7 @@ int  MATCH_SPACE (int measured_ticks,  int desired_us)
  	return passed;
 }
 
+#ifdef ISR
 //+=============================================================================
 // Interrupt Service Routine - Fires every 50uS
 // TIMER2 interrupt code to collect raw data.
@@ -196,3 +197,4 @@ ISR (TIMER_INTR_NAME)
 	}
 #endif // BLINKLED
 }
+#endif // ISR

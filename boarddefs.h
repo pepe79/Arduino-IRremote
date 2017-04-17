@@ -90,6 +90,19 @@
         // Supply own enbleIRIn
 #       undef USE_DEFAULT_ENABLE_IR_IN
 
+#elif defined(ESP8266)
+
+// avr/interrupt.h is not present
+#       undef HAS_AVR_INTERRUPT_H
+
+#	define USE_SOFT_CARRIER
+
+	// Supply own enbleIRIn
+#       undef USE_DEFAULT_ENABLE_IR_IN
+
+	// The default pin used used for sending.
+#	define SEND_PIN 4 // pin 4 = D2 on board
+
 #else
 #	define BLINKLED        13
 #	define BLINKLED_ON()  (PORTB |= B00100000)
@@ -184,6 +197,8 @@
 
 #elif defined(ESP32)
 	#define IR_TIMER_USE_ESP32
+
+#elif defined(ESP8266)
 
 #elif defined(ARDUINO_ARCH_SAM) || defined(ARDUINO_ARCH_SAMD)
 	#define TIMER_PRESCALER_DIV 64
@@ -617,6 +632,20 @@
 #	undef ISR
 #endif
 #define  ISR(f)  void IRTimer()
+
+#elif defined(ESP8266)
+
+#define TIMER_RESET
+
+//#define TIMER_CONFIG_NORMAL()
+//#define TIMER_ENABLE_INTR
+#define TIMER_DISABLE_PWM
+#define TIMER_DISABLE_INTR
+#define TIMER_CONFIG_KHZ(khz)
+
+#ifdef ISR
+#	undef ISR
+#endif
 
 #elif defined(ARDUINO_ARCH_SAM) || defined(ARDUINO_ARCH_SAMD)
 // use timer 3 hardcoded at this time
