@@ -84,11 +84,13 @@
         // avr/interrupt.h is not present
 #       undef HAS_AVR_INTERRUPT_H
 
-        // Sending not implemented
-#       undef SENDING_SUPPORTED#
+#       define USE_SOFT_CARRIER
+#       define SEND_PIN 27
 
         // Supply own enbleIRIn
 #       undef USE_DEFAULT_ENABLE_IR_IN
+
+
 
 #else
 #	define BLINKLED        13
@@ -612,6 +614,10 @@
 #elif defined(IR_TIMER_USE_ESP32)
 
 #define TIMER_RESET
+#define TIMER_ENABLE_PWM     // Not presently used
+#define TIMER_DISABLE_PWM
+#define TIMER_DISABLE_INTR
+#define TIMER_CONFIG_KHZ
 
 #ifdef ISR
 #	undef ISR
